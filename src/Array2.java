@@ -49,7 +49,21 @@ class Array2 {
 
   // Find the maximum odd number in the array. Return -1
   // if there are no odd numbers.
+  // Time complexity O(N)
   public int maxOdd() {
+	  int foundIndex = -1;
+	  for (int i = 0; i < arr.length; i++) {
+		  if (arr[i] % 2 > 0) {
+			  if (foundIndex == -1) {
+				  foundIndex = i;
+			  } else if (arr[i] > arr[foundIndex]) {
+				  foundIndex = i;
+			  }
+		  }
+	  }
+	  if (foundIndex > -1) {
+		  return arr[foundIndex];
+	  }
     return -1;
   }
 
@@ -65,8 +79,13 @@ class Array2 {
 
   // Return the index of the first occurrence of x in the array,
   // or -1 if x does not occur.
+  // Time complexity: O(N)
   public int find(int x) {
-    return 0;
+	  for (int i = 0; i < arr.length; i++) {
+		  if (arr[i] == x) 
+			  return i;
+	  }
+    return -1;
   }
 
   // Find the length of the longest palindrome that is
@@ -74,6 +93,7 @@ class Array2 {
   // is a word of the form ABCBA (length 5) or ABCCBA
   // (length 6).
   public int maxPalindrome() {
+	  
     return 0;
   }
 
@@ -93,11 +113,15 @@ class Array2 {
   public int median() {
     return 0;
   }
-
+  
   public static void main (String[] args) {
     Array2 a = new Array2(3);
     a.set(0, 4);
     a.set(1, 2);
+    a.set(2, 7);
+    a.set(3, 17);
     System.out.println(a.toString());
+    System.out.println("maxOdd():\t" + a.maxOdd());
+    System.out.println("  find():\t" + a.find(17));
   }
 }
