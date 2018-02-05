@@ -123,17 +123,13 @@ public class Lab1Sorting {
 
     public static void main(String[] args) {
       // Put code here to try out your algorithms
-      int[] example1     = new int[] {3, 5, 6, 4, 2, 1};
-      int[] exampleMerge = new int[] {3, 5, 6, 4, 2, 1};
-      int[] exampleQuick = new int[] {3, 5, 6, 4, 2, 1};
-      System.out.println("mergeSort:\t" + Arrays.toString(mergeSort(exampleMerge)));
-      quickSort(exampleQuick);
-      System.out.println("quickSort:\t" + Arrays.toString(exampleQuick));
-      
-      
-      // Insertion sort performs sorting in place, and it will
-      // modify the original array;
-      //insertionSort(example1);
-      //System.out.println(Arrays.toString(example1));
+      int[] mergeArray = new int[] {3, 5, 6, 4, 2, 1};
+      int[] quickArray = new int[] {3, 5, 6, 4, 2, 1};
+      int[] insertionArray = new int[] {3, 5, 6, 4, 2, 1};
+      System.out.println("mergeSort:\t" + Arrays.toString(mergeSort(mergeArray)));
+      quickSort(quickArray);
+      System.out.println("quickSort:\t" + Arrays.toString(quickArray));
+      insertionSort(insertionArray);
+      System.out.println("insertionSort:\t" + Arrays.toString(insertionArray));      
     }
 }
