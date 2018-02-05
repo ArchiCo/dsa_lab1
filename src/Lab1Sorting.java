@@ -29,17 +29,23 @@ public class Lab1Sorting {
         int pivot = partition(array, begin, end);
 
         // Now recursively quicksort the two partitions.
-        throw new UnsupportedOperationException();
+        quickSort(array, begin, pivot);
+        quickSort(array, pivot+1, end);
     }
 
     // Partition part of an array, and return the index where the pivot
     // ended up.
     private static int partition(int[] array, int begin, int end) {
         // array[begin] will be the pivot element
-        int low = begin+1;
+    	int low = begin;
         int high = end;
-
-        throw new UnsupportedOperationException();
+        
+        while (low < high) {
+        	while (array[low]  < array[begin])  ++low;
+        	while (array[high] > array[begin]) --high;
+        	swap (array, low, high);
+        }
+        return low;
     }
 
     // Swap two elements in an array
@@ -69,7 +75,9 @@ public class Lab1Sorting {
 
         // Recursively sort both halves of the array,
         // then merge the results.
-        throw new UnsupportedOperationException();
+        int[] left  = mergeSort(array, begin, mid);
+        int[] right = mergeSort(array, mid + 1, end);
+        return merge(left, right);
     }
 
     // Merge two sorted arrays into one
@@ -84,18 +92,44 @@ public class Lab1Sorting {
         int nextRight = 0;
 
         // Idea: repeatedly copy one element from either the left or right array to the result array.
-        throw new UnsupportedOperationException();
+        while(nextLeft < left.length && nextRight < right.length) {
+            if(left[nextLeft] < right[nextRight]) {
+                result[nextResult] = left[nextLeft];
+                nextLeft++;
+            } else {
+                result[nextResult] = right[nextRight];
+                nextRight++;
+            }
+            nextResult++;
+        }
+
+        while(nextLeft < left.length) {
+            result[nextResult] = left[nextLeft];
+            nextResult++; nextLeft++;
+        }
+
+        while(nextRight < right.length) {
+            result[nextResult] = right[nextRight];
+            nextResult++; nextRight++;
+        }
+        return result;
     }
 
+    
 
     public static void main(String[] args) {
       // Put code here to try out your algorithms
-      int[] example1 = new int[] {3, 5, 6, 4, 2, 1};
-
-
+      int[] example1     = new int[] {3, 5, 6, 4, 2, 1};
+      int[] exampleMerge = new int[] {3, 5, 6, 4, 2, 1};
+      int[] exampleQuick = new int[] {3, 5, 6, 4, 2, 1};
+      System.out.println("mergeSort:\t" + Arrays.toString(mergeSort(exampleMerge)));
+      quickSort(exampleQuick);
+      System.out.println("quickSort:\t" + Arrays.toString(exampleQuick));
+      
+      
       // Insertion sort performs sorting in place, and it will
       // modify the original array;
-      insertionSort(example1);
-      System.out.println(Arrays.toString(example1));
+      //insertionSort(example1);
+      //System.out.println(Arrays.toString(example1));
     }
 }

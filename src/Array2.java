@@ -76,7 +76,8 @@ class Array2 {
   }
 
   // Remove the element of index i from the array.
-  public void remove(int i) { //Question 3: O(n) because one for loop
+//Question 3: O(n) because one for loop
+  public void remove(int i) { 
     --size;
 
     for (; i < size; ++i) {
@@ -87,7 +88,8 @@ class Array2 {
   // Remove the element of index i from the array.
   // This method may change the order of the other
   // elements of the array.
-  public void remove2(int i) { //Question 3: O(1)
+  //Question 3: O(1)
+  public void remove2(int i) { 
     arr[i] = arr[--size];
   }
 
