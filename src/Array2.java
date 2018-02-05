@@ -45,6 +45,12 @@ class Array2 {
 
   // Reverse the array
   public void reverse() {
+    int tmp;
+    for (int i = 0; i < size/2; ++i) {
+      tmp = arr[i];
+      arr[i] = arr[size-1-i];
+      arr[size-1-i] = tmp;
+    }
   }
 
   // Find the maximum odd number in the array. Return -1
@@ -54,13 +60,19 @@ class Array2 {
   }
 
   // Remove the element of index i from the array.
-  public void remove(int i) {
+  public void remove(int i) { //Question 3: O(n) because one for loop
+    --size;
+
+    for (; i < size; ++i) {
+      arr[i] = arr[i+1];
+    }
   }
 
   // Remove the element of index i from the array.
   // This method may change the order of the other
   // elements of the array.
-  public void removeFast(int i) {
+  public void removeFast(int i) { //Question 3: O(1)
+    arr[i] = arr[--size];
   }
 
   // Return the index of the first occurrence of x in the array,
@@ -86,7 +98,21 @@ class Array2 {
   // assuming that the array contains a cyclic shift of
   // a non-decreasing sequence.
   public int findSplice() {
-    return 0;
+    int left   = 0;
+    int right  = size-1;
+    int middle = size/2;
+
+    while(right-left > 1){
+      if(arr[middle] <= arr[right]){
+        right = middle;
+      }else{
+        left = middle;
+      }
+
+      middle = (right-left)/2 + left;
+    }
+
+    return arr[left] <= arr[right]? left : right;
   }
 
   // Return the median value of an array.
@@ -101,3 +127,4 @@ class Array2 {
     System.out.println(a.toString());
   }
 }
+
