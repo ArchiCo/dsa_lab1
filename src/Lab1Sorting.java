@@ -11,7 +11,11 @@ public class Lab1Sorting {
     // Insertion sort.
 
     public static void insertionSort(int[] array) {
-        throw new UnsupportedOperationException();
+        for (int i=1; i<array.length; ++i) {
+            for (int j=i; j>0 && array[j] < array[j-1]; --j){
+                swap(array,j,j-1);
+            }
+        }
     }
 
     // Quicksort.

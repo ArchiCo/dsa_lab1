@@ -217,7 +217,7 @@ class Array2 {
 	  }
   }
   
-  public int partition(int[] array, int left, int right, int pivotIndex) {
+  public static int partition(int[] array, int left, int right, int pivotIndex) {
 	  int pivot = array[pivotIndex];
 	  swap(array, pivotIndex, right);
 	  for (int i = left; i < right; i++) {
@@ -230,7 +230,7 @@ class Array2 {
 	  return left;
   }
 
-  public void swap(int[] array, int left, int right) {
+  public static void swap(int[] array, int left, int right) {
 	  int swap = array[left];
 	  array[left] = array[right];
 	  array[right] = swap;
