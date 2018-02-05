@@ -1,3 +1,7 @@
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 class Array2 {
   private final int max_elements = 200;
   private int size = 0;
@@ -55,8 +59,22 @@ class Array2 {
 
   // Find the maximum odd number in the array. Return -1
   // if there are no odd numbers.
+  // Time complexity O(N)
   public int maxOdd() {
-    return -1;
+	  int foundIndex = -1;
+	  for (int i = 0; i < size; i++) {
+		  if (arr[i] % 2 > 0) {
+			  if (foundIndex == -1) {
+				  foundIndex = i;
+			  } else if (arr[i] > arr[foundIndex]) {
+				  foundIndex = i;
+			  }
+		  }
+	  }
+	  if (foundIndex > -1) {
+		  return arr[foundIndex];
+	  }
+    return 0;
   }
 
   // Remove the element of index i from the array.
@@ -77,21 +95,71 @@ class Array2 {
 
   // Return the index of the first occurrence of x in the array,
   // or -1 if x does not occur.
+  // Time complexity: O(N)
   public int find(int x) {
-    return 0;
+	  for (int i = 0; i < size; i++) {
+		  if (arr[i] == x) 
+			  return i;
+	  }
+    return -1;
   }
 
   // Find the length of the longest palindrome that is
   // a contiguous subsequence of the array. A palindrome
   // is a word of the form ABCBA (length 5) or ABCCBA
   // (length 6).
+  // Time complexity O(N^2)
   public int maxPalindrome() {
-    return 0;
+	  if (size < 2) {
+		  return size;
+	  }
+	  
+      int left, right, maxPalindromeLength = 1;
+      for (int i = 1; i < size; ++i) {
+          left = i - 1; right = i;
+          while (left >= 0 && right < size && arr[left] == arr[right]) {
+              if ((right - left + 1) > maxPalindromeLength) {
+                  maxPalindromeLength = right - left + 1;
+              }
+              left--; right++;
+          }
+          left = i - 1; right = i + 1;
+          while (left >= 0 && right < size && arr[left] == arr[right]) {
+              if (right - left + 1 > maxPalindromeLength) {
+                  maxPalindromeLength = right - left + 1;
+              }
+              left--; right++;
+          }
+      }
+      return maxPalindromeLength;
   }
 
   // Return the maximum sum of all contiguous subarrays of the array.
+  // Time complexity: O(Nlog(N))
   public int maxInterval() {
-    return 0;
+	  return maxInterval(arr, 0, size);
+  }
+  
+  public int maxInterval(int[] array, int lo, int hi) {
+	  if (hi - lo == 1) return array[lo];
+	  int mid = lo + (hi - lo) / 2;
+	  int loRes = maxInterval (array, lo, mid);
+	  int hiRes = maxInterval (array, mid, hi);
+	  int maxBorder = 0;
+	  // Find the maximum subarray that crosses the border
+	  // ...
+	  int loSum = 0, hiSum = 0, toSum = 0;
+      for (int i = mid - 1; i >= lo; i--) {
+    	  loSum = Math.max(loSum, toSum);
+    	  toSum += array[i];
+      }
+      toSum = 0;
+      for (int i = mid + 1; i <= hi; i++) {
+          hiSum = Math.max(hiSum, toSum);
+    	  toSum += array[i];
+      }
+      maxBorder = loSum + array[mid] + hiSum;
+	  return Math.max(loRes, Math.max(hiRes, maxBorder));  
   }
 
   // Return the index of the lowest element of the array,
@@ -114,17 +182,80 @@ class Array2 {
 
     return arr[left] <= arr[right]? left : right;
   }
+  
+  // Optimized solution to the fibbonaci problem
+  // Time complexity of the old solution: O(2^N) - exponential
+  // Time complexity of this solution: O(N) - linear
+  public BigInteger fib(int n) {
+	    if (n <= 1) {
+	    	return BigInteger.valueOf(n);
+	    }
+	    BigInteger x = BigInteger.ZERO, y = BigInteger.ONE, prevSum;
+	    for (int i = 2; i <= n; i++) {
+	        prevSum = x.add(y);
+	        x = y; y = prevSum;
+	    }
+	    return y;
+	}
 
   // Return the median value of an array.
   public int median() {
-    return 0;
+	  int n = size / 2, left = 0, right = size - 1;
+	  if (left == right) {
+		  return arr[left];
+	  }
+	  while(true) {
+		  int pivotIndex = left + (int) Math.floor(Math.random() * (right - left + 1)); // randomize pivot selection
+		  pivotIndex = partition(arr, left, right, pivotIndex);
+		  if (n == pivotIndex) {
+			  return arr[n];
+		  } else if(n < pivotIndex) {
+			  right = pivotIndex - 1;
+		  } else {
+			  left = pivotIndex + 1;
+	      }
+	  }
+  }
+  
+  public int partition(int[] array, int left, int right, int pivotIndex) {
+	  int pivot = array[pivotIndex];
+	  swap(array, pivotIndex, right);
+	  for (int i = left; i < right; i++) {
+		  if (array[i] < pivot) {
+			  swap(array, left, i);
+			  left++;
+		  }
+	  }
+	  swap(array, right, left);
+	  return left;
+  }
+
+  public void swap(int[] array, int left, int right) {
+	  int swap = array[left];
+	  array[left] = array[right];
+	  array[right] = swap;
   }
 
   public static void main (String[] args) {
-    Array2 a = new Array2(3);
-    a.set(0, 4);
-    a.set(1, 2);
-    System.out.println(a.toString());
+    Array2 a = new Array2(10);
+    a.set(0, 3);
+    a.set(1, 4);
+    a.set(2, 2);
+    a.set(3, 5);
+    a.set(4, 3);
+    a.set(5, 1);
+    a.set(6, 3);
+    a.set(7, 4);
+    a.set(8, 3);
+    a.set(9, 1);
+    System.out.println(
+    		"     toString():  "   + a.toString() +
+    		"\n         find():  " + a.find(-3) +
+    		"\n       maxOdd():  " + a.maxOdd() +
+    		"\nmaxPalindrome():  " + a.maxPalindrome() +
+    		"\n  maxInterval():  " + a.maxInterval() +
+    		"\n          fib():  "     + a.fib(99) +
+    		"\n       median():  " + a.median());
   }
 }
 
