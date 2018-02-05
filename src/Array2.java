@@ -1,6 +1,4 @@
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 class Array2 {
   private final int max_elements = 200;
